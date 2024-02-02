@@ -84,6 +84,7 @@ public class TopDownCharacterController : MonoBehaviour
                 playerSpeed = 2f;
             }
                 
+            
         }
         else
         {

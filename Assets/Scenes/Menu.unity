@@ -1837,6 +1837,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Controls_Settings_Panel: {fileID: 1120249264}
+  m_Inventory_Panel: {fileID: 0}
 --- !u!4 &1234081641
 Transform:
   m_ObjectHideFlags: 0
