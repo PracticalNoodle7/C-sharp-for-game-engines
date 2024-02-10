@@ -94,11 +94,10 @@ public class TopDownCharacterController : MonoBehaviour
             animator.SetFloat("Speed", 0);
         }
 
-
         // Was the fire button pressed (mapped to Left mouse button or gamepad trigger)
         if (Input.GetButtonDown("Fire1"))
         {
-            Fire();
+            Attack();
         }
     }
 
@@ -108,7 +107,7 @@ public class TopDownCharacterController : MonoBehaviour
     [SerializeField] float m_projectileSpeed;
 
     // Called when the fire button is pressed to spawn and move the projectile from the player
-    void Fire()
+    void Attack()
     {
         GameObject bulletToSpawn = Instantiate(m_bulletPrefab, transform.position, Quaternion.identity);
 
@@ -117,4 +116,11 @@ public class TopDownCharacterController : MonoBehaviour
             bulletToSpawn.GetComponent<Rigidbody2D>().AddForce(playerDirection.normalized * m_projectileSpeed, ForceMode2D.Impulse);
         }
     }
+
+    
+
+
+
+
+
 }
