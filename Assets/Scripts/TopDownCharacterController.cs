@@ -72,19 +72,17 @@ public class TopDownCharacterController : MonoBehaviour
             playerSpeed = 1f;
 
             //Have they pressed the "R" button down? If so, set roll to true
-            if (Input.GetKeyDown(KeyCode.R))
+            if (Input.GetKeyDown(KeyCode.Space))
             {
                 animator.SetTrigger("IsRolling");
             }
-                
-            
+
             //Increase player speed when rolling
             if (animator.GetCurrentAnimatorStateInfo(0).IsName("Player_RollTree"))
             {
                 playerSpeed = 2f;
             }
-                
-            
+
         }
         else
         {
@@ -95,6 +93,7 @@ public class TopDownCharacterController : MonoBehaviour
             //Update the animator too, and return
             animator.SetFloat("Speed", 0);
         }
+
 
         // Was the fire button pressed (mapped to Left mouse button or gamepad trigger)
         if (Input.GetButtonDown("Fire1"))
@@ -113,8 +112,8 @@ public class TopDownCharacterController : MonoBehaviour
     {
         GameObject bulletToSpawn = Instantiate(m_bulletPrefab, transform.position, Quaternion.identity);
 
-        if (bulletToSpawn.GetComponent<Rigidbody2D>() != null) 
-        { 
+        if (bulletToSpawn.GetComponent<Rigidbody2D>() != null)
+        {
             bulletToSpawn.GetComponent<Rigidbody2D>().AddForce(playerDirection.normalized * m_projectileSpeed, ForceMode2D.Impulse);
         }
     }
