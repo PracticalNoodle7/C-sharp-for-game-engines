@@ -21,6 +21,12 @@ public class TopDownCharacterController : MonoBehaviour
     [Header("Movement parameters")]
     //The maximum speed the player can move
     [SerializeField] private float playerMaxSpeed = 100f;
+
+    // Const of stamina to perfrom the roll mechanic
+    public float rollStaminaCost = 20f;
+
+    //referance to stamina sctipt
+    public TopDownCharacterStamina pStamina;
     #endregion
 
 
@@ -71,10 +77,18 @@ public class TopDownCharacterController : MonoBehaviour
             //And set the speed to 1, so they move!
             playerSpeed = 1f;
 
-            //Have they pressed the "R" button down? If so, set roll to true
+            //Have they pressed the "SpaceBar" down? If so, check if they have enough stamina. If they do then exicure roll funcition
             if (Input.GetKeyDown(KeyCode.Space))
             {
-                animator.SetTrigger("IsRolling");
+                if (pStamina.stamina >= rollStaminaCost)
+                {
+                    pStamina.DecStaminaByRoll(rollStaminaCost);
+                    Roll();
+                }
+                else
+                {
+                    Debug.Log("Not enough stamina to roll!");
+                }          
             }
 
             //Increase player speed when rolling
@@ -99,6 +113,14 @@ public class TopDownCharacterController : MonoBehaviour
         {
             Attack();
         }
+    }
+
+    public void Roll()
+    {
+        animator.SetTrigger("IsRolling");
+
+
+            
     }
 
 
