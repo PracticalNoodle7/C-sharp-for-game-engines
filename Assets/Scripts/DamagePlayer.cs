@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class DamagePlayer : MonoBehaviour
 {
-    public TopDownCharacterHealth pHealth;
+    public TopDownCharacterStats pHealth;
     public float damage;
 
 
