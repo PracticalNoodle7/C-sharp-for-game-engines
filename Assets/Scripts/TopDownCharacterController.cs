@@ -19,6 +19,7 @@ public class TopDownCharacterController : MonoBehaviour
     private float playerSpeed = 1f;
 
     [Header("Movement parameters")]
+
     //The maximum speed the player can move
     [SerializeField] private float playerMaxSpeed = 100f;
 
@@ -43,10 +44,7 @@ public class TopDownCharacterController : MonoBehaviour
     /// <summary>
     /// Called after Awake(), and is used to initialize variables e.g. set values on the player
     /// </summary>
-    private void Start()
-    {
-
-    }
+    //private void Start()
 
     /// <summary>
     /// When a fixed update loop is called, it runs at a constant rate, regardless of pc perfornamce so physics can be calculated properly
@@ -117,10 +115,7 @@ public class TopDownCharacterController : MonoBehaviour
 
     public void Roll()
     {
-        animator.SetTrigger("IsRolling");
-
-
-            
+        animator.SetTrigger("IsRolling"); 
     }
 
 
