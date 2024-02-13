@@ -36,12 +36,4 @@ public class InteractUI : MonoBehaviour
             m_Hold_E.SetActive(isHoldEVisable);
         }
     }
-
-
-
-
-
-    // Update is called once per frame
-    // void Update()
-
 }

@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class DestroyTree : MonoBehaviour
+public class TopDownTreeStates : MonoBehaviour
 {
     public float treeHealth;
     public float maxTreeHealth;

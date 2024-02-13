@@ -53,7 +53,7 @@ public class TopDownCharacterController : MonoBehaviour
     {
         //Set the velocity to the direction they're moving in, multiplied
         //by the speed they're moving
-        rb.velocity = playerDirection * (playerSpeed * playerMaxSpeed) * Time.fixedDeltaTime;
+        rb.velocity = playerMaxSpeed * playerSpeed * Time.fixedDeltaTime * playerDirection;
     }
 
     /// <summary>
@@ -64,6 +64,10 @@ public class TopDownCharacterController : MonoBehaviour
         // read input from WASD keys
         playerDirection.x = Input.GetAxis("Horizontal");
         playerDirection.y = Input.GetAxis("Vertical");
+
+        Vector3 mousePosition = Camera.main.ScreenToWorldPoint(Input.mousePosition);
+        Vector2 lookDirection = (mousePosition - transform.position).normalized;
+
 
         // check if there is some movement direction, if there is something, then set animator flags and make speed = 1
         if (playerDirection.magnitude != 0)
@@ -86,7 +90,7 @@ public class TopDownCharacterController : MonoBehaviour
                 else
                 {
                     Debug.Log("Not enough stamina to roll!");
-                }          
+                }
             }
 
             //Increase player speed when rolling
