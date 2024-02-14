@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 
 
+
 public class TopDownCharacterController : MonoBehaviour
 {
     #region Framework Stuff
@@ -28,12 +29,12 @@ public class TopDownCharacterController : MonoBehaviour
 
     //referance to stamina sctipt
     public TopDownCharacterStamina pStamina;
+
+    //check if the player is rolling
+    private bool isRolling = false;
     #endregion
 
 
-    /// <summary>
-    /// When the script first initialises this gets called, use this for grabbing componenets
-    /// </summary>
     private void Awake()
     {
         //Get the attached components so we can use them later
@@ -41,14 +42,6 @@ public class TopDownCharacterController : MonoBehaviour
         animator = GetComponent<Animator>();
     }
 
-    /// <summary>
-    /// Called after Awake(), and is used to initialize variables e.g. set values on the player
-    /// </summary>
-    //private void Start()
-
-    /// <summary>
-    /// When a fixed update loop is called, it runs at a constant rate, regardless of pc perfornamce so physics can be calculated properly
-    /// </summary>
     private void FixedUpdate()
     {
         //Set the velocity to the direction they're moving in, multiplied
@@ -56,26 +49,30 @@ public class TopDownCharacterController : MonoBehaviour
         rb.velocity = playerMaxSpeed * playerSpeed * Time.fixedDeltaTime * playerDirection;
     }
 
-    /// <summary>
-    /// When the update loop is called, it runs every frame, ca run more or less frequently depending on performance. Used to catch changes in variables or input.
-    /// </summary>
     private void Update()
     {
-        // read input from WASD keys
-        playerDirection.x = Input.GetAxis("Horizontal");
-        playerDirection.y = Input.GetAxis("Vertical");
+        //If the player is rolling then the update loop will stop working
+        if (isRolling) return;
 
+        // Get mouse position in world coordinates, Calculate direction from player to mouse
         Vector3 mousePosition = Camera.main.ScreenToWorldPoint(Input.mousePosition);
         Vector2 lookDirection = (mousePosition - transform.position).normalized;
 
+        // Read input from WASD keys
+        playerDirection.x = Input.GetAxis("Horizontal");
+        playerDirection.y = Input.GetAxis("Vertical");
+        
+        // Updates the animation perameters of the character
+        if (animator != null)
+        {
+            animator.SetFloat("Horizontal", lookDirection.x);
+            animator.SetFloat("Vertical", lookDirection.y); 
+            animator.SetFloat("Speed", playerDirection.magnitude);
+        }
 
         // check if there is some movement direction, if there is something, then set animator flags and make speed = 1
         if (playerDirection.magnitude != 0)
         {
-            animator.SetFloat("Horizontal", playerDirection.x);
-            animator.SetFloat("Vertical", playerDirection.y);
-            animator.SetFloat("Speed", playerDirection.magnitude);
-
             //And set the speed to 1, so they move!
             playerSpeed = 1f;
 
@@ -92,18 +89,10 @@ public class TopDownCharacterController : MonoBehaviour
                     Debug.Log("Not enough stamina to roll!");
                 }
             }
-
-            //Increase player speed when rolling
-            if (animator.GetCurrentAnimatorStateInfo(0).IsName("Player_RollTree"))
-            {
-                playerSpeed = 2f;
-            }
-
         }
         else
         {
-            //Was the input just cancelled (released)? If so, set
-            //speed to 0
+            //Was the input just cancelled (released)? If so set speed to 0
             playerSpeed = 0f;
 
             //Update the animator too, and return
@@ -117,11 +106,33 @@ public class TopDownCharacterController : MonoBehaviour
         }
     }
 
-    public void Roll()
+    private void LateUpdate()
     {
-        animator.SetTrigger("IsRolling"); 
+            //Increase player speed when rolling
+            if (animator.GetCurrentAnimatorStateInfo(0).IsName("Player_RollTree"))
+            {
+                playerSpeed = 2f;
+            }
     }
 
+    // Changes the player animation to rolling when called
+    public void Roll()
+    {
+        isRolling = true;
+        animator.SetTrigger("IsRolling");
+
+        // Get the duration of the roll animation
+        float rollDuration = 0.9f;
+
+        //Invoking a method to reset isRolling to false after the roll is completed based on a duration
+        Invoke(nameof(ResetRollingFlag), rollDuration);
+    }
+    
+    // Reset isRolling to false to allow player movement again
+    private void ResetRollingFlag()
+    {
+        isRolling = false;
+    }
 
     [SerializeField] GameObject m_bulletPrefab;
     [SerializeField] Transform m_firePoint;
@@ -130,11 +141,17 @@ public class TopDownCharacterController : MonoBehaviour
     // Called when the fire button is pressed to spawn and move the projectile from the player
     void Attack()
     {
+        // Get mouse position in world coordinates
+        Vector3 mousePosition = Camera.main.ScreenToWorldPoint(Input.mousePosition);
+        Vector2 directionToMouse = (mousePosition - transform.position).normalized;
+
+        // Instantiate the bullet at the player's position
         GameObject bulletToSpawn = Instantiate(m_bulletPrefab, transform.position, Quaternion.identity);
 
+        // Apply force to the bullet in the direction of the mouse
         if (bulletToSpawn.GetComponent<Rigidbody2D>() != null)
         {
-            bulletToSpawn.GetComponent<Rigidbody2D>().AddForce(playerDirection.normalized * m_projectileSpeed, ForceMode2D.Impulse);
+            bulletToSpawn.GetComponent<Rigidbody2D>().AddForce(directionToMouse.normalized * m_projectileSpeed, ForceMode2D.Impulse);
         }
     }
 
