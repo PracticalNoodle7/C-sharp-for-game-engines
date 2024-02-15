@@ -8,6 +8,7 @@ TagManager:
   - CaveEnterance
   - InteractIsPressE
   - InteractIsHoldE
+  - Enemy
   layers:
   - Default
   - TransparentFX
