@@ -10,6 +10,7 @@ public class MenuManager : MonoBehaviour
     bool isCSPanelOpen = false;
     public GameObject m_Inventory_Panel;
     bool isInvPanelOpen = false;
+    public ItemSlotManager[] itemSlot;
 
    public void LoadLevel1()
    {
@@ -39,4 +40,25 @@ public class MenuManager : MonoBehaviour
                 OpenAndCloseInventoryPanel();
             }
     }
+
+    public void AddItem(string itemName, int quantity, Sprite sprite)
+    {
+        for (int i = 0; i < itemSlot.Length; i++)
+        {
+            if (itemSlot[i].isFull == false)
+            {
+                itemSlot[i].AddItem(itemName, quantity, sprite);
+                return;
+            }
+        }
+    }
+
+    public void DeselectAllSlots()
+    {
+        for (int i = 0;i < itemSlot.Length; i++)
+        {
+            itemSlot[i].selectedShader.SetActive(false);
+            itemSlot[i].thisItemSelected = false;   
+        }
+    }    
 }   
