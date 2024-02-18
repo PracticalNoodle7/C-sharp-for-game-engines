@@ -305,8 +305,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   itemName: 
   quantity: 0
-  sprite: {fileID: 0}
+  sprite: {fileID: 473432810, guid: 94fdd4bdace20ba45b4287c4f0ecbb71, type: 3}
   isFull: 0
+  maxNumberOfItems: 10
   quantityText: {fileID: 7433430430633565381}
   itemImage: {fileID: 8514077575537536357}
   selectedShader: {fileID: 1957273065873783882}

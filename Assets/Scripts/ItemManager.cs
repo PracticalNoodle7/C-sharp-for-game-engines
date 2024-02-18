@@ -8,23 +8,28 @@ public class ItemManager : MonoBehaviour
     [SerializeField] private int quantity;
     [SerializeField] private Sprite sprite;
 
-    private MenuManager inventoryManager;
-
-
+    private InventoryManager inventoryManager;
 
     // Start is called before the first frame update
     void Start()
     {
-        inventoryManager = GameObject.Find("UI Manager").GetComponent<MenuManager>();
+        inventoryManager = GameObject.Find("UI Manager").GetComponent<InventoryManager>();
     }
 
     private void OnCollisionEnter2D(Collision2D collision)
     {
         if (collision.gameObject.CompareTag("Player"))
         {
-            Debug.Log("Collided");
-            inventoryManager.AddItem(itemName, quantity, sprite);
-            Destroy(gameObject);
+            int leftOverItems = inventoryManager.AddItem(itemName, quantity, sprite);
+            if (leftOverItems <= 0)
+            {
+                Destroy(gameObject);
+            }
+            else
+            {
+                quantity = leftOverItems;
+            }
+            
         }
     }
 
