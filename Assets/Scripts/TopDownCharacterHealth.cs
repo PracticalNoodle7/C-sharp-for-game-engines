@@ -5,6 +5,7 @@ public class TopDownCharacterHealth : MonoBehaviour
 {
     public float health;
     public float maxHealth;
+    public float newHealth;
     public Image healthBar;
 
     // Start is called before the first frame update
@@ -21,4 +22,20 @@ public class TopDownCharacterHealth : MonoBehaviour
             healthBar.fillAmount = Mathf.Clamp(health / maxHealth, 0, 1);
         }
     }
+
+    public void RestoreHealth(int amountToChangeStat)
+    {
+        newHealth = health += amountToChangeStat;
+        if (newHealth < maxHealth)
+        {
+            health = newHealth;
+        }
+        else
+        {
+            health = maxHealth;
+        }
+
+
+    }
+
 }
