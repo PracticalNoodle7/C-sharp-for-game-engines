@@ -2,6 +2,7 @@ using JetBrains.Annotations;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.EventSystems;
 
 [CreateAssetMenu]
 public class ItemSO : ScriptableObject
@@ -50,5 +51,5 @@ public class ItemSO : ScriptableObject
         defense,
         intelligence,
         agility
-    };
+    };    
 }

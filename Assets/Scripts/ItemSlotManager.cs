@@ -6,7 +6,7 @@ using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.UI;
 
-public class ItemSlotManager : MonoBehaviour , IPointerClickHandler
+public class ItemSlotManager : MonoBehaviour, IPointerClickHandler
 {
     //This is the item data
     public string itemName;
@@ -28,6 +28,7 @@ public class ItemSlotManager : MonoBehaviour , IPointerClickHandler
     {
         inventoryManager = GameObject.Find("UI Manager").GetComponent<InventoryManager>();
     }
+
     public int AddItem(string itemName, int quantity, Sprite sprite)
     {
         //Checking to see if slot is already full
@@ -48,7 +49,7 @@ public class ItemSlotManager : MonoBehaviour , IPointerClickHandler
         if (this.quantity >= maxNumberOfItems)
         {
             quantityText.text = maxNumberOfItems.ToString();
-            quantityText.enabled = true;        
+            quantityText.enabled = true;
             isFull = true;
 
             //return left over items
@@ -57,14 +58,13 @@ public class ItemSlotManager : MonoBehaviour , IPointerClickHandler
             return extraItems;
         }
 
-            //Updating quantity text
-            quantityText.text = this.quantity.ToString();
-            quantityText.enabled = true;
-            return 0;
-
+        //Updating quantity text
+        quantityText.text = this.quantity.ToString();
+        quantityText.enabled = true;
+        return 0;
     }
     public void OnPointerClick(PointerEventData eventData)
-    {            
+    {
 
         if (eventData.button == PointerEventData.InputButton.Left)
         {
@@ -75,7 +75,7 @@ public class ItemSlotManager : MonoBehaviour , IPointerClickHandler
         {
             OnRightClick();
         }
-    }        
+    }
     public void OnLeftClick()
     {
         if (thisItemSelected)
@@ -114,4 +114,6 @@ public class ItemSlotManager : MonoBehaviour , IPointerClickHandler
 
 
     }
+
+
 }

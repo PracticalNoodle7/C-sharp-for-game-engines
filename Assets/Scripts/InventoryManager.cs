@@ -10,19 +10,22 @@ public class InventoryManager : MonoBehaviour
     bool isInvPanelOpen = false;
     public ItemSlotManager[] itemSlot;
     public ItemSO[] itemSOs;
+    public EquipableSlotManager[] eSlot;
+    
+    private void Update()
+    {
+        if (Input.GetKeyDown(KeyCode.I))
+        {
+            OpenAndCloseInventoryPanel();
+        }
+    }
 
     public void OpenAndCloseInventoryPanel()
     {
         isInvPanelOpen = !isInvPanelOpen;
         m_Inventory_Panel.SetActive(isInvPanelOpen);
     }
-    private void Update()
-    {
-        if (Input.GetKeyDown(KeyCode.I))
-            {
-                OpenAndCloseInventoryPanel();
-            }
-    }
+
 
     public bool UseItem(string itemName)
     {

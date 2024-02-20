@@ -5,8 +5,11 @@ using UnityEngine.UI;
 
 public class HotbarManager : MonoBehaviour
 {
-    public void SwitchHotbarItem()
-    {
+    public HotBarSlotManager[] HBslots;
 
-    }
+
+
+
+
+
 }
