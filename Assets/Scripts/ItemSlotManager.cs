@@ -24,6 +24,7 @@ public class ItemSlotManager : MonoBehaviour, IPointerClickHandler
 
     private InventoryManager inventoryManager;
 
+
     private void Start()
     {
         inventoryManager = GameObject.Find("UI Manager").GetComponent<InventoryManager>();
@@ -104,7 +105,6 @@ public class ItemSlotManager : MonoBehaviour, IPointerClickHandler
 
     public void OnRightClick()
     {
-
     }
 
     private void EmptySlot()
