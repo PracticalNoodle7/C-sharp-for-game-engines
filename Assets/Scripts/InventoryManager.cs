@@ -10,7 +10,6 @@ public class InventoryManager : MonoBehaviour
     bool isInvPanelOpen = false;
     public ItemSlotManager[] itemSlot;
     public ItemSO[] itemSOs;
-    public EquipableSlotManager[] eSlot;
     
     private void Update()
     {
@@ -39,6 +38,7 @@ public class InventoryManager : MonoBehaviour
         }
         return false;
     }
+
 
     //When called this method will take the item details and run it though the inventory slots to add it while performing a couple of checks throught
     public int AddItem(string itemName, int quantity, Sprite sprite)
