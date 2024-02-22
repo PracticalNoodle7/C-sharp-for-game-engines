@@ -5,7 +5,7 @@ using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.UI;
 
-public class EquipableSlotManager : MonoBehaviour
+public class EquipableSlotManager : MonoBehaviour, IPointerClickHandler
 {
     //This is the item data
     public string equitmentName;
@@ -16,6 +16,7 @@ public class EquipableSlotManager : MonoBehaviour
 
     //This is the item slot itself
     [SerializeField] private TMP_Text quantityText;
+    public bool thisEquitmentSelected;
     [SerializeField] private Image itemImage;
 
     private InventoryManager inventoryManager;
@@ -61,4 +62,8 @@ public class EquipableSlotManager : MonoBehaviour
         return 0;
     }
 
+    public void OnPointerClick(PointerEventData eventData)
+    {
+
+    }
 }

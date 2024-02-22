@@ -9,6 +9,7 @@ public class InventoryManager : MonoBehaviour
     public GameObject m_Inventory_Panel;
     bool isInvPanelOpen = false;
     public ItemSlotManager[] itemSlot;
+    public EquipableSlotManager[] equitmentSlot;
     public ItemSO[] itemSOs;
     
     private void Update()

@@ -14,6 +14,7 @@ public class ItemSlotManager : MonoBehaviour, IPointerClickHandler
     public string itemName;
     public int quantity;
     public Sprite sprite;
+    [SerializeField] Sprite EmptySprite;
     public bool isFull;
     [SerializeField] int maxNumberOfItems;
 
@@ -23,7 +24,9 @@ public class ItemSlotManager : MonoBehaviour, IPointerClickHandler
 
     public GameObject selectedShader;
     public bool thisItemSelected;
+
     private bool waitForVariable = false;
+    public int originSlot;
 
     string tempItemName;
     int tempQuantity;
@@ -121,16 +124,19 @@ public class ItemSlotManager : MonoBehaviour, IPointerClickHandler
             tempQuantity = quantity;
             tempSprite = sprite;
 
+            int basicSlot = FindSelectedSlot();
+            originSlot = basicSlot;
+
             inventoryManager.DeselectAllSlots();
+            StartItemTransfer();
 
         }
-        if(!thisItemSelected)
-        {
-       
-            StartCoroutine(WaitForSelectedTrue());        
- 
-            StartCoroutine(WaitForVaraibleAndTransfer());
-        }
+    }
+
+    public void StartItemTransfer()
+    {
+        StartCoroutine(WaitForSelectedTrue());
+        StartCoroutine(WaitForVaraibleAndTransfer());   
     }
 
     public IEnumerator WaitForVaraibleAndTransfer()
@@ -141,14 +147,10 @@ public class ItemSlotManager : MonoBehaviour, IPointerClickHandler
             yield return null;
         }
 
-
         int newSlot = FindSelectedSlot();
 
         // Transfer item data to the target slot
         TransferItemSlotData(newSlot, tempItemName, tempQuantity, tempSprite);
-
-        // Clear temporary data
-       // ClearTemporaryData();
 
         // Reset the waitForVariable flag
         waitForVariable = false;
@@ -156,16 +158,14 @@ public class ItemSlotManager : MonoBehaviour, IPointerClickHandler
 
     public IEnumerator WaitForSelectedTrue()
     {
-        Debug.Log("true");
-
         while (!conditionMet)
         {
-            Debug.Log("I");
+            CheckingIfConditionIsTrue();
             yield return null;
         }
         
         waitForVariable = true;
-        Debug.Log("I am now true");
+        conditionMet = false;
     }
 
     private int FindSelectedSlot()
@@ -178,61 +178,61 @@ public class ItemSlotManager : MonoBehaviour, IPointerClickHandler
                 return i;
             }
         }
+        for (int i = 0; i < inventoryManager.equitmentSlot.Length; i++)
+        {
+            if (inventoryManager.equitmentSlot[i].thisEquitmentSelected)
+            {
+                return i;
+            }
+        }
 
         // Return -1 or throw an exception if no slot is selected
         return -1;
     }
-    private int TransferItemSlotData(int newSlot, string tempItemName, int tempQuantity, Sprite tempSprite)
-    {
-        //Checking to see if slot is already full
-        if (isFull)
+    private void TransferItemSlotData(int newSlot, string tempItemName, int tempQuantity, Sprite tempSprite)
+    { 
+        if (originSlot != newSlot)
         {
-            return quantity;
+            //Checking to see if slot is already full
+            if (!isFull )
+            {   
+                //Updating item name
+                inventoryManager.itemSlot[newSlot].itemName = tempItemName;
+                
+                //Updating item image
+                inventoryManager.itemSlot[newSlot].sprite = tempSprite;
+                inventoryManager.itemSlot[newSlot].itemImage.sprite = sprite;
+
+                //Updating quantity text
+                inventoryManager.itemSlot[newSlot].quantityText.enabled = true;
+                inventoryManager.itemSlot[newSlot].quantity += tempQuantity;
+            }
+            
+            inventoryManager.itemSlot[newSlot].quantityText.text = quantity.ToString();
+            EmptyOriginSlot(originSlot);
         }
-
-        //Updating item name
-        inventoryManager.itemSlot[newSlot].itemName = tempItemName;
-
-        //Updating item image
-        inventoryManager.itemSlot[newSlot].sprite = tempSprite;
-        inventoryManager.itemSlot[newSlot].itemImage.sprite = sprite;
-
-        //Updating item quantity
-        inventoryManager.itemSlot[newSlot].quantity += tempQuantity;
-        if (inventoryManager.itemSlot[newSlot].quantity >= maxNumberOfItems)
-        {
-            quantityText.text = maxNumberOfItems.ToString();
-            quantityText.enabled = true;
-            isFull = true;
-
-            //return left over items
-            int extraItems = inventoryManager.itemSlot[newSlot].quantity - maxNumberOfItems;
-            inventoryManager.itemSlot[newSlot].quantity = maxNumberOfItems;
-            return extraItems;
-        }
-
-        //Updating quantity text
-        quantityText.text = this.quantity.ToString();
-        quantityText.enabled = true;
-        Debug.Log("Completed");
-        return 0;
         
     }
     private void EmptySlot()
     {
         quantityText.enabled = false;
-        itemImage.sprite = sprite;
+        itemImage.sprite = EmptySprite;
     }
 
-    public void Update()
+    private void EmptyOriginSlot(int originSlot)
+    {
+        inventoryManager.itemSlot[originSlot].quantityText.enabled = false;
+        inventoryManager.itemSlot[originSlot].quantity = 0;
+        inventoryManager.itemSlot[originSlot].itemImage.sprite = EmptySprite;
+        inventoryManager.itemSlot[originSlot].itemName = null;
+    }
+
+    public void CheckingIfConditionIsTrue()
     {
         for (int i = 0; i < inventoryManager.itemSlot.Length; i++)
         {
-            Debug.Log("I am reading all slots");
-
             if (inventoryManager.itemSlot[i].thisItemSelected == true)
             {
-                Debug.Log("now");
                 conditionMet = !conditionMet;
             }
         }
