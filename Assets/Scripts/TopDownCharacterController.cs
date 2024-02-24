@@ -32,6 +32,9 @@ public class TopDownCharacterController : MonoBehaviour
 
     //check if the player is rolling
     private bool isRolling = false;
+
+    //Attaching a GameObject to the character to decide what they are holding from the equipped pannel
+    public GameObject HeldItem;
     #endregion
 
 
@@ -40,6 +43,7 @@ public class TopDownCharacterController : MonoBehaviour
         //Get the attached components so we can use them later
         rb = GetComponent<Rigidbody2D>();
         animator = GetComponent<Animator>();
+
     }
 
     private void FixedUpdate()
@@ -51,6 +55,8 @@ public class TopDownCharacterController : MonoBehaviour
 
     private void Update()
     {
+        HeldItem = GameObject.Find("ToolSlot1");
+
         //If the player is rolling then the update loop will stop working
         if (isRolling) return;
 
@@ -100,10 +106,10 @@ public class TopDownCharacterController : MonoBehaviour
         }
 
         // Was the fire button pressed (mapped to Left mouse button or gamepad trigger)
-        if (Input.GetButtonDown("Fire1"))
-        {
-            Attack();
-        }
+       // if (Input.GetButtonDown("Fire1"))
+       // {
+       //     Attack();
+       // }
     }
 
     private void LateUpdate()
@@ -134,7 +140,7 @@ public class TopDownCharacterController : MonoBehaviour
         isRolling = false;
     }
 
-    [SerializeField] GameObject m_bulletPrefab;
+    //[SerializeField] GameObject m_bulletPrefab;
     [SerializeField] Transform m_firePoint;
     [SerializeField] float m_projectileSpeed;
 
@@ -146,7 +152,7 @@ public class TopDownCharacterController : MonoBehaviour
         Vector2 directionToMouse = (mousePosition - transform.position).normalized;
 
         // Instantiate the bullet at the player's position
-        GameObject bulletToSpawn = Instantiate(m_bulletPrefab, transform.position, Quaternion.identity);
+        GameObject bulletToSpawn = Instantiate(HeldItem, transform.position, Quaternion.identity);
 
         // Apply force to the bullet in the direction of the mouse
         if (bulletToSpawn.GetComponent<Rigidbody2D>() != null)
@@ -154,11 +160,5 @@ public class TopDownCharacterController : MonoBehaviour
             bulletToSpawn.GetComponent<Rigidbody2D>().AddForce(directionToMouse.normalized * m_projectileSpeed, ForceMode2D.Impulse);
         }
     }
-
-    
-
-
-
-
 
 }
