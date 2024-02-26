@@ -34,8 +34,5 @@ public class TopDownCharacterHealth : MonoBehaviour
         {
             health = maxHealth;
         }
-
-
     }
-
 }

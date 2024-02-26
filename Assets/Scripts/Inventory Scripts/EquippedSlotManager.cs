@@ -23,11 +23,13 @@ public class EquippedSlotManager : MonoBehaviour, IPointerClickHandler
 
     //Referance to InventoryManger script
     private InventoryManager inventoryManager;
+    private HeldItemManager heldItemManager;
 
     private void Start()
     {
         //Attaching the InventoryManager script from a GameOject to ensure the correct one is assigned and make it easier to for the code to find the script
         inventoryManager = GameObject.Find("UI Manager").GetComponent<InventoryManager>();
+        heldItemManager = GameObject.Find("character").GetComponent<HeldItemManager>();
     }
     public void Equip(Sprite ItemSprite, string itemName)
     {
@@ -44,20 +46,33 @@ public class EquippedSlotManager : MonoBehaviour, IPointerClickHandler
 
         //Update the Data
         this.itemName = itemName;
-       // this.itemDescription = itemDescription;
         slotFull = true;
+
+        if (heldItemManager != null)
+        {
+            heldItemManager.CheckIfToolEquipped();
+        }
+        else
+        {
+            Debug.Log("heldItemManager is not found");
+        }
     }
 
     public void UnEquip()
     {
         inventoryManager.DeselectAllSlots();
 
+
+
         inventoryManager.AddItem(itemName, 1, itemSprite, itemType);
 
         //Updating the slot image for equipped slot
+        this.itemName = null;
         this.itemSprite = emptySprite;
         slotImage.sprite = this.emptySprite;
         slotName.enabled = true;
+        
+        heldItemManager.CheckIfToolEquipped();
     }
 
    public void OnPointerClick(PointerEventData eventData)

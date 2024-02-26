@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Assertions.Must;
+using UnityEngine.Rendering;
 
 public class BasicWeapon : MonoBehaviour
 {
@@ -42,8 +43,6 @@ public class BasicWeapon : MonoBehaviour
             // Player position is not equal to spawn position
             Debug.Log("Player location is not equal to spawn location.");
         }
-
-
     }
         private void OnTriggerEnter2D(Collider2D BulletPrefab)
         {

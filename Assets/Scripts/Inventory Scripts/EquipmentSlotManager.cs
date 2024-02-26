@@ -135,6 +135,7 @@ public class EquipmentSlotManager : MonoBehaviour, IPointerClickHandler
     }
     private void EmptySlot()
     {
+        itemName = null;
         itemImage.sprite = EmptySprite;
         quantity = 0;
         isFull = false;

@@ -16,9 +16,4 @@ public class WeaponSO : ScriptableObject
     {
         return false;
     }
-
-
-
-
-
 }
