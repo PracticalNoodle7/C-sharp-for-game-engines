@@ -27,7 +27,7 @@ public class MovingObsticle : MonoBehaviour
     private void OnTriggerEnter2D(Collider2D collision)
     {
 
-        Debug.Log("Collision with: " + collision.gameObject.name);
+      //  Debug.Log("Collision with: " + collision.gameObject.name);
 
         if (collision.CompareTag("MovingObstacleWaypoint"))
         {

@@ -25,10 +25,7 @@ public class BasicWeapon : MonoBehaviour
         Vector2 directionToMouse = (mousePosition - transform.position).normalized;
 
         if (Vector3.Distance(transform.position, PlayerLocation.transform.position) < 0.01f)
-        {
-            // Player position is equal to spawn position
-            Debug.Log("Player location is equal to spawn location.");   
-            
+        {   
             // Instantiate the bullet at the player's position
             GameObject bulletToSpawn = Instantiate(BulletPrefab, transform.position, Quaternion.identity);
 
@@ -37,11 +34,6 @@ public class BasicWeapon : MonoBehaviour
             {
                 bulletToSpawn.GetComponent<Rigidbody2D>().AddForce(directionToMouse.normalized * weaponSO.projectileSpeed, ForceMode2D.Impulse);
             }
-        }
-        else
-        {
-            // Player position is not equal to spawn position
-            Debug.Log("Player location is not equal to spawn location.");
         }
     }
         private void OnTriggerEnter2D(Collider2D BulletPrefab)
