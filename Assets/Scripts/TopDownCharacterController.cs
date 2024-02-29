@@ -43,6 +43,8 @@ public class TopDownCharacterController : MonoBehaviour
 
     //referance to stamina sctipt
     public TopDownCharacterStamina pStamina;
+
+    PlayerDeadUIController deadUIController;
     #endregion
 
 
@@ -55,6 +57,7 @@ public class TopDownCharacterController : MonoBehaviour
 
     void Start()
     {
+        deadUIController = GameObject.Find("UI Manager").GetComponent<PlayerDeadUIController>();
         maxHealth = health;
     }
 
@@ -145,7 +148,18 @@ public class TopDownCharacterController : MonoBehaviour
     {
         isDead = true;
         playerSpeed = 0f;
+        deadUIController.isPlayerDeadPanelOpen = true;
+        deadUIController.OpenPlayerDeadPanel();
 
+    }
+
+    public void RevivePlayer()
+    {
+        health = maxHealth;
+        isDead = false;
+        playerSpeed = 1f;
+        deadUIController.isPlayerDeadPanelOpen = false;
+        deadUIController.OpenPlayerDeadPanel();
     }
 
     private void LateUpdate()

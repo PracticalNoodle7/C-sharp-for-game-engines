@@ -12,10 +12,13 @@ public class BulletDamageDetecter : MonoBehaviour
         if (other.gameObject.CompareTag("Enemy"))
         {
             other.gameObject.GetComponent<EnemyController>().DamageEnemy(weaponSO.damage);
+            
         }
         else
         {
             GameObject.Destroy(BasicBulletPrefab);
         }
+        
+        Destroy(BasicBulletPrefab);
     }
 }

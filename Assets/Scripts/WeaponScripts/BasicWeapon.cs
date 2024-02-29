@@ -36,20 +36,4 @@ public class BasicWeapon : MonoBehaviour
             }
         }
     }
-        private void OnTriggerEnter2D(Collider2D BulletPrefab)
-        {
-            if (BulletPrefab.gameObject.CompareTag("Enemy"))
-            {
-                BulletPrefab.gameObject.GetComponent<EnemyController>().DamageEnemy(weaponSO.damage);
-            }
-        }
-
-
-
-
-
-
-
-
-
 }

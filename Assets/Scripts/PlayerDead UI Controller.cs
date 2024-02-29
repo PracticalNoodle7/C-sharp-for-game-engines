@@ -6,18 +6,27 @@ using UnityEngine;
 public class PlayerDeadUIController : MonoBehaviour
 {
     public GameObject m_PlayerDeadPanel;
-    bool isPlayerDeadPanelOpen = false;
+    public bool isPlayerDeadPanelOpen;
+
+    TopDownCharacterController characterController;
+    [SerializeField] GameObject Player;
+    public float x;
+    public float y;
+
+    private void Start()
+    {
+        characterController = GameObject.Find("character").GetComponent<TopDownCharacterController>();
+    }
 
     public void OpenPlayerDeadPanel()
     {
-        isPlayerDeadPanelOpen = true;
         m_PlayerDeadPanel.SetActive(isPlayerDeadPanelOpen);
     }
 
     public void Respawn()
     {
-
-
+        Player.transform.position = new Vector2(x, y);
+        characterController.RevivePlayer();
     }
 
 
