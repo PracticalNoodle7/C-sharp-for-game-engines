@@ -5,10 +5,10 @@ TagManager:
   serializedVersion: 2
   tags:
   - MovingObstacleWaypoint
-  - CaveEnterance
   - InteractIsPressE
   - InteractIsHoldE
   - Enemy
+  - Arena Enterance
   layers:
   - Default
   - TransparentFX

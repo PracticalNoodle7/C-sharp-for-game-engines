@@ -17,16 +17,23 @@ public class EnemyController: MonoBehaviour
     public float maxHealth;
     public Image healthBar;
 
+    ArenaManager arenaManager;
+
     //enum EnemyStates { Idle, MoveToPlayer, Attack, };
    // EnemyStates m_EnemyStates;
 
     void Start()
     {
+        arenaManager = GameObject.Find("ArenaController").GetComponent<ArenaManager>();
+
         //Applying the players location to a variable
         m_Player = FindObjectOfType<TopDownCharacterController>().transform;
         
         //Setting enemy's max health to their current health upon script starting
         maxHealth = health;
+
+        //Adding to the arena enemy count
+        arenaManager.AddToEnemyCount();
     }
 
     void Update()
@@ -44,7 +51,7 @@ public class EnemyController: MonoBehaviour
 
             if (health <= 0)
             {
-                Death();
+                EnemyIsDead();
             }
         }
     }
@@ -56,7 +63,6 @@ public class EnemyController: MonoBehaviour
         {
             m_PlayerInSight = true;
         }
-        
     }
     private void OnTriggerExit2D(Collider2D collision)
     {
@@ -72,9 +78,12 @@ public class EnemyController: MonoBehaviour
         health -= damage;
     }
 
-    public void Death()
+    public void EnemyIsDead()
     {
         Destroy(gameObject);
+
+        //Updating the enemy count
+        arenaManager.MinusFromEnemyCount();
     }
 
 

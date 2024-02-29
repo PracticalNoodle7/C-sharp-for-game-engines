@@ -1,36 +1,47 @@
 using System.Collections;
-using System.Collections.Generic;
-using System.Diagnostics.CodeAnalysis;
-using TMPro.Examples;
-using Unity.Collections;
 using UnityEngine;
 
 public class ArenaManager : MonoBehaviour
 {
-    [SerializeField] GameObject arenaController;
-    bool isWaveStarting;
-    int amountOfEnemiesInsideArena;
+    [SerializeField] GameObject EnterArena;
+    int CurrentlySpawnedEnemys;
     int maxNumberOfEnemiesInsideArena;
-    bool testing;
     public GameObject[] enemyPrefabs;
     public Transform[] spawnPoints;
+    TopDownCharacterController characterController;
 
-    public void Update()
+    public void Start()
     {
-        if (!testing)
-        {
-            StartCoroutine(WaveController());
-            testing = true;
-        }
+        characterController = GameObject.Find("character").GetComponent<TopDownCharacterController>();
+    }
 
-        if (amountOfEnemiesInsideArena < maxNumberOfEnemiesInsideArena)
+    private void Update()
+    {
+        if (characterController.isDead == true)
         {
-            SpawnEnemy();
+            StopAllCoroutines();
+            maxNumberOfEnemiesInsideArena = 0;
         }
     }
 
+    public void AddToEnemyCount()
+    {
+        CurrentlySpawnedEnemys += 1;
+    }
+
+    public void MinusFromEnemyCount()
+    {
+        CurrentlySpawnedEnemys -= 1;
+    }
 
     public void StartArena()
+    {
+        CurrentlySpawnedEnemys = 0;
+        WaveDifficultyController();
+        StartCoroutine(DelayEnemySpawning());
+    }
+
+    public void WaveDifficultyController()
     {        
         StopCoroutine(WaveController());
 
@@ -72,43 +83,34 @@ public class ArenaManager : MonoBehaviour
 
     public IEnumerator WaveController()
     {
-        while(isWaveStarting)
-        { 
-            yield return null;
-        }
-        yield return new WaitForSeconds(Random.Range(120, 417));
+        yield return new WaitForSeconds(20);
 
-        StartArena();
+        WaveDifficultyController();
+    }
+
+    public IEnumerator DelayEnemySpawning()
+    {
+        yield return new WaitForSeconds(2);
+
+        SpawnEnemy();
     }
 
     private void SpawnEnemy()
     {
-        // Choose a random spawn point
-        Transform randomSpawnPoint = spawnPoints[Random.Range(0, spawnPoints.Length)];
+        StopCoroutine(DelayEnemySpawning());
 
-        // Choose a random enemy prefab
-        GameObject randomEnemyPrefab = enemyPrefabs[Random.Range(0, enemyPrefabs.Length)];
-
-        // Spawn the random enemy at the random spawn point
-        GameObject enemyToSpawn = Instantiate(randomEnemyPrefab, randomSpawnPoint.position, Quaternion.identity);
-
-        // If the spawned enemy has a Rigidbody2D component, you can access it like this
-        Rigidbody2D enemyRb = enemyToSpawn.GetComponent<Rigidbody2D>();
-
-        if (enemyRb != null)
+        if (CurrentlySpawnedEnemys < maxNumberOfEnemiesInsideArena)
         {
-            // Do something with the Rigidbody2D component if needed
+            // Choose a random spawn point
+            Transform randomSpawnPoint = spawnPoints[Random.Range(0, spawnPoints.Length)];
+
+            // Choose a random enemy prefab
+            GameObject randomEnemyPrefab = enemyPrefabs[Random.Range(0, enemyPrefabs.Length)];
+
+            // Spawn the random enemy at the random spawn point
+            Instantiate(randomEnemyPrefab, randomSpawnPoint.position, Quaternion.identity);
         }
 
+        StartCoroutine(DelayEnemySpawning());
     }
-
-
-
-
-
-
-
-
-
-
 }

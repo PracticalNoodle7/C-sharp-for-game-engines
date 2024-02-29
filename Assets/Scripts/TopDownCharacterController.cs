@@ -1,8 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-
-
+using UnityEngine.UI;
 
 public class TopDownCharacterController : MonoBehaviour
 {
@@ -13,13 +12,13 @@ public class TopDownCharacterController : MonoBehaviour
     //Reference to attached rigidbody 2D
     private Rigidbody2D rb;
 
+    [Header("Movement parameters")]
+
     //The direction the player is moving in
     private Vector2 playerDirection;
 
     //The speed at which they're moving
     private float playerSpeed = 1f;
-
-    [Header("Movement parameters")]
 
     //The maximum speed the player can move
     [SerializeField] private float playerMaxSpeed = 100f;
@@ -27,14 +26,23 @@ public class TopDownCharacterController : MonoBehaviour
     // Const of stamina to perfrom the roll mechanic
     public float rollStaminaCost = 20f;
 
-    //referance to stamina sctipt
-    public TopDownCharacterStamina pStamina;
+    //Check if the player is alive or dead
+    public bool isDead = false;
 
     //check if the player is rolling
     private bool isRolling = false;
 
-    //Attaching a GameObject to the character to decide what they are holding from the equipped pannel
-    public GameObject HeldItem;
+    [Header("Health perameters")]
+
+    //Declaring variables related to the players health and the image of the player health for the UI
+    public float health;
+    public float maxHealth;
+    public float newHealth;
+    public Image healthBar;
+
+
+    //referance to stamina sctipt
+    public TopDownCharacterStamina pStamina;
     #endregion
 
 
@@ -43,7 +51,11 @@ public class TopDownCharacterController : MonoBehaviour
         //Get the attached components so we can use them later
         rb = GetComponent<Rigidbody2D>();
         animator = GetComponent<Animator>();
+    }
 
+    void Start()
+    {
+        maxHealth = health;
     }
 
     private void FixedUpdate()
@@ -55,9 +67,18 @@ public class TopDownCharacterController : MonoBehaviour
 
     private void Update()
     {
-        HeldItem = GameObject.Find("ToolSlot1");
+        if (healthBar != null)
+        {
+            healthBar.fillAmount = Mathf.Clamp(health / maxHealth, 0, 1);
+        }
+
+        if (health <= 0)
+        {
+            PlayerIsDead();
+        }
 
         //If the player is rolling then the update loop will stop working
+        if (isDead) return;
         if (isRolling) return;
 
         // Get mouse position in world coordinates, Calculate direction from player to mouse
@@ -104,21 +125,36 @@ public class TopDownCharacterController : MonoBehaviour
             //Update the animator too, and return
             animator.SetFloat("Speed", 0);
         }
+    }
 
-        // Was the fire button pressed (mapped to Left mouse button or gamepad trigger)
-       // if (Input.GetButtonDown("Fire1"))
-       // {
-       //     Attack();
-       // }
+    public void RestoreHealth(int amountToChangeStat)
+    {
+        newHealth = health += amountToChangeStat;
+        if (newHealth < maxHealth)
+        {
+            health = newHealth;
+        }
+        else
+        {
+            health = maxHealth;
+        }
+    }
+
+    //Method for when the player is dead
+    private void PlayerIsDead()
+    {
+        isDead = true;
+        playerSpeed = 0f;
+
     }
 
     private void LateUpdate()
     {
-            //Increase player speed when rolling
-            if (animator.GetCurrentAnimatorStateInfo(0).IsName("Player_RollTree"))
-            {
-                playerSpeed = 2f;
-            }
+        //Increase player speed when rolling
+        if (animator.GetCurrentAnimatorStateInfo(0).IsName("Player_RollTree"))
+        {
+            playerSpeed = 2f;
+        }
     }
 
     // Changes the player animation to rolling when called
@@ -139,26 +175,4 @@ public class TopDownCharacterController : MonoBehaviour
     {
         isRolling = false;
     }
-
-    //[SerializeField] GameObject m_bulletPrefab;
-    [SerializeField] Transform m_firePoint;
-    [SerializeField] float m_projectileSpeed;
-
-    // Called when the fire button is pressed to spawn and move the projectile from the player
-    void Attack()
-    {
-        // Get mouse position in world coordinates
-        Vector3 mousePosition = Camera.main.ScreenToWorldPoint(Input.mousePosition);
-        Vector2 directionToMouse = (mousePosition - transform.position).normalized;
-
-        // Instantiate the bullet at the player's position
-        GameObject bulletToSpawn = Instantiate(HeldItem, transform.position, Quaternion.identity);
-
-        // Apply force to the bullet in the direction of the mouse
-        if (bulletToSpawn.GetComponent<Rigidbody2D>() != null)
-        {
-            bulletToSpawn.GetComponent<Rigidbody2D>().AddForce(directionToMouse.normalized * m_projectileSpeed, ForceMode2D.Impulse);
-        }
-    }
-
 }

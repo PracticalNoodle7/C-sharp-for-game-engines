@@ -19,14 +19,14 @@ public class ItemSO : ScriptableObject
         
         if (statToChange == StatToChange.health)
         {
-            TopDownCharacterHealth pHealth = GameObject.Find("character").GetComponent<TopDownCharacterHealth>();
-            if (pHealth.health == pHealth.maxHealth)
+            TopDownCharacterController characterController = GameObject.Find("character").GetComponent<TopDownCharacterController>();
+            if (characterController.health == characterController.maxHealth)
             {
                 return false;
             }
             else
             {
-                pHealth.RestoreHealth(amountToChangeStat);
+                characterController.RestoreHealth(amountToChangeStat);
                 return true;
             }
         }
