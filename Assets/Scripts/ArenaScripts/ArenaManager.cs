@@ -47,39 +47,31 @@ public class ArenaManager : MonoBehaviour
 
         if (maxNumberOfEnemiesInsideArena >= 30 && maxNumberOfEnemiesInsideArena < 35)
         {
-            Debug.Log("35 is called");
             maxNumberOfEnemiesInsideArena = 35;
         }
         if (maxNumberOfEnemiesInsideArena >= 25 && maxNumberOfEnemiesInsideArena < 30)
         {
-            Debug.Log("30 is called");
             maxNumberOfEnemiesInsideArena = 30;
         }
         if (maxNumberOfEnemiesInsideArena >= 20 && maxNumberOfEnemiesInsideArena < 25)
         {
-            Debug.Log("25 is called");
             maxNumberOfEnemiesInsideArena = 25;
         }
         if (maxNumberOfEnemiesInsideArena >= 15 && maxNumberOfEnemiesInsideArena < 20)
         {
-            Debug.Log("20 is called");
             maxNumberOfEnemiesInsideArena = 20;
         }
         if (maxNumberOfEnemiesInsideArena >= 10 && maxNumberOfEnemiesInsideArena < 15)
         {
-            Debug.Log("15 is called");
             maxNumberOfEnemiesInsideArena = 15;
         }
         if (maxNumberOfEnemiesInsideArena < 10)
         {
-            Debug.Log("10 is called");
             maxNumberOfEnemiesInsideArena = 10;
         }
 
-
         StartCoroutine(WaveController());
     }
-
 
     public IEnumerator WaveController()
     {
@@ -112,5 +104,23 @@ public class ArenaManager : MonoBehaviour
         }
 
         StartCoroutine(DelayEnemySpawning());
+    }
+
+    private void OnTriggerStay2D(Collider2D collision)
+    {
+        if (characterController.isDead == true)
+        {
+            StartCoroutine(WaitForSeconds());
+
+            if (collision.CompareTag("Enemy"))
+            {
+                Destroy(collision.gameObject);
+            }
+            StopCoroutine(WaitForSeconds());
+        }
+    }
+    public IEnumerator WaitForSeconds()
+    {
+        yield return new WaitForSeconds(2);
     }
 }

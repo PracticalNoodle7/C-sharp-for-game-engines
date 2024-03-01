@@ -17,14 +17,24 @@ public class EnemyController: MonoBehaviour
     public float maxHealth;
     public Image healthBar;
 
-    ArenaManager arenaManager;
+    //Declaring Animations
+    private Animator animator;
 
-    //enum EnemyStates { Idle, MoveToPlayer, Attack, };
-   // EnemyStates m_EnemyStates;
+    ArenaManager arenaManager;
+    scoreSystem scoreSystem;
+
+    private void Awake()
+    {
+
+    }
 
     void Start()
     {
         arenaManager = GameObject.Find("ArenaController").GetComponent<ArenaManager>();
+        scoreSystem = GameObject.Find("scoreSystem").GetComponent<scoreSystem>();
+
+        //Get the attached components so we can use them later
+        animator = GetComponent<Animator>();
 
         //Applying the players location to a variable
         m_Player = FindObjectOfType<TopDownCharacterController>().transform;
@@ -51,6 +61,7 @@ public class EnemyController: MonoBehaviour
 
             if (health <= 0)
             {
+
                 EnemyIsDead();
             }
         }
@@ -80,7 +91,16 @@ public class EnemyController: MonoBehaviour
 
     public void EnemyIsDead()
     {
-        Destroy(gameObject);
+        animator.SetBool("isDead", true);
+        
+        float animationLength = 0.9f;
+        Invoke(nameof(DestroyEnemy), animationLength);
+    }
+
+    public void DestroyEnemy()
+    {
+        Destroy(gameObject);        
+        scoreSystem.AddScore(10);
 
         //Updating the enemy count
         arenaManager.MinusFromEnemyCount();

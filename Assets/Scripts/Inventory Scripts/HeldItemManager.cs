@@ -25,6 +25,13 @@ public class HeldItemManager : MonoBehaviour
                 weaponToTransform[0].parent = character;
                 weaponToTransform[0].localPosition = Vector3.zero;
             }
+
+            if (toolSlot[i].itemName == "AssultRifle")
+            {
+                // Sets the character as the parent of basicWeaponManager and assign its position to be the same
+                weaponToTransform[1].parent = character;
+                weaponToTransform[1].localPosition = Vector3.zero;
+            }
         }
     }
 

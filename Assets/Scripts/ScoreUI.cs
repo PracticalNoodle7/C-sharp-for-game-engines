@@ -5,7 +5,6 @@ using UnityEngine;
 public class ScoreUI : MonoBehaviour
 {
     public scoreSystem scoreSystem;
-
     public TMPro.TextMeshProUGUI uiLabel;
 
     private void Update()

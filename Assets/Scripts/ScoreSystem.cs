@@ -10,9 +10,4 @@ public class scoreSystem : MonoBehaviour
     {
         score = score + scoreToAdd;
     }    
-    
-    public void AddToScore()
-    {
-        score += 5;
-    }
 }
