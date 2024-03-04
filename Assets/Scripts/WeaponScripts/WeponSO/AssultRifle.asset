@@ -15,4 +15,5 @@ MonoBehaviour:
   weaponName: AssultRifle
   damage: 10
   projectileSpeed: 50
+  FireRate: 0.25
   spawnLocation: {x: 0, y: 0, z: 0}

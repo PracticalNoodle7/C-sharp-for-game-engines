@@ -8,20 +8,21 @@ public class AssultRifleWeapon : MonoBehaviour
     [SerializeField] private GameObject BulletPrefab;
     [SerializeField] private GameObject PlayerLocation;
     private bool buttonHeld = false;
-
+    private bool canShoot = true;
     private void Update()
     {
         if (Input.GetButtonDown("Fire1"))
         {
             buttonHeld = true;
+            canShoot = true; // Reset canShoot when the fire button is pressed
         }
 
         if (Input.GetButton("Fire1"))
         {
-            if (buttonHeld)
+            if (buttonHeld && canShoot)
             {
-                
-                Attack();
+                StartCoroutine(ShootAndWait());
+                canShoot = false; // Set canShoot to false after shooting
             }
         }
 
@@ -31,9 +32,17 @@ public class AssultRifleWeapon : MonoBehaviour
         }
     }
 
+    IEnumerator ShootAndWait()
+    {
+        while (buttonHeld)
+        {
+            Attack();
+            yield return new WaitForSeconds(weaponSO.FireRate);
+        }
+    }
+
     void Attack()
     {
-
         // Get mouse position in world coordinates
         Vector3 mousePosition = Camera.main.ScreenToWorldPoint(Input.mousePosition);
         Vector2 directionToMouse = (mousePosition - transform.position).normalized;

@@ -10,6 +10,7 @@ public class WeaponSO : ScriptableObject
     public string weaponName;
     public int damage;
     public float projectileSpeed;
+    public float FireRate;
     public Vector3 spawnLocation;
 
     public bool FireBullet()

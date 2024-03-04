@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 3938760256135223095}
   - component: {fileID: 8138854428408642036}
   - component: {fileID: 7625381905666765978}
-  m_Layer: 5
+  m_Layer: 8
   m_Name: EnemyHealthBoarder
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -87,7 +87,7 @@ GameObject:
   - component: {fileID: 8998691991732484751}
   - component: {fileID: 2025207810588479625}
   - component: {fileID: 7100580124857643424}
-  m_Layer: 5
+  m_Layer: 8
   m_Name: EnemyHealthBar
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -163,13 +163,13 @@ GameObject:
   m_Component:
   - component: {fileID: 8698545881043049341}
   - component: {fileID: 2269974595627843590}
-  - component: {fileID: 577893688966324400}
+  - component: {fileID: 162922128176964013}
   - component: {fileID: 389423181225096157}
   - component: {fileID: 2052652523980077624}
   - component: {fileID: 8060628432049068643}
   - component: {fileID: 5025067078080716538}
   - component: {fileID: 3133095019719312910}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: BearMonster
   m_TagString: Enemy
   m_Icon: {fileID: 0}
@@ -205,12 +205,18 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Player: {fileID: 0}
-  m_speed: 2
-  m_stoppingDistance: 10
-  health: 150
+  m_speed: 8.5
+  m_stoppingDistance: 3.5
+  m_PlayerInSight: 0
+  Attacking: 0
+  health: 125
   maxHealth: 0
   healthBar: {fileID: 7100580124857643424}
---- !u!114 &577893688966324400
+  animator: {fileID: 0}
+  runningAnimationName: BearMonster_Running
+  attackAnimationName: BearMonster_Attack
+  deathAnimationName: 
+--- !u!114 &162922128176964013
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -219,10 +225,11 @@ MonoBehaviour:
   m_GameObject: {fileID: 7369624827567486129}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 11dfde9640c141d419acccb07aff7bb5, type: 3}
+  m_Script: {fileID: 11500000, guid: 998e4c008ed96d64285f45b2e11f68ac, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  damage: 30
+  EnemyBullet: {fileID: 0}
+  projectileSpeed: 45
 --- !u!70 &389423181225096157
 CapsuleCollider2D:
   m_ObjectHideFlags: 0
@@ -292,7 +299,7 @@ CircleCollider2D:
   m_UsedByComposite: 0
   m_Offset: {x: 0, y: 0}
   serializedVersion: 2
-  m_Radius: 20
+  m_Radius: 30
 --- !u!50 &8060628432049068643
 Rigidbody2D:
   serializedVersion: 4
@@ -405,7 +412,7 @@ GameObject:
   - component: {fileID: 4387030159333948173}
   - component: {fileID: 7677739383910555097}
   - component: {fileID: 3035139057003862977}
-  m_Layer: 5
+  m_Layer: 8
   m_Name: HealthBarCanvas
   m_TagString: Untagged
   m_Icon: {fileID: 0}

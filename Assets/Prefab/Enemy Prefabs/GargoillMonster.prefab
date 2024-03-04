@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 3655553936065837139}
   - component: {fileID: 5956481311027591931}
   - component: {fileID: 3576654039938275334}
-  m_Layer: 5
+  m_Layer: 8
   m_Name: EnemyHealthBar
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -88,7 +88,7 @@ GameObject:
   - component: {fileID: 6045840950970285127}
   - component: {fileID: 8549772835318733515}
   - component: {fileID: 8237563279439105546}
-  m_Layer: 5
+  m_Layer: 8
   m_Name: EnemyHealthBoarder
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -165,7 +165,7 @@ GameObject:
   - component: {fileID: 519384192143586610}
   - component: {fileID: 4709654883147057309}
   - component: {fileID: 557146401398383233}
-  m_Layer: 5
+  m_Layer: 8
   m_Name: HealthBarCanvas
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -272,7 +272,7 @@ GameObject:
   - component: {fileID: 8256367461363301376}
   - component: {fileID: 8002115585181887504}
   - component: {fileID: 2818284663390524415}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: GargoillMonster
   m_TagString: Enemy
   m_Icon: {fileID: 0}
@@ -308,11 +308,17 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Player: {fileID: 0}
-  m_speed: 2
-  m_stoppingDistance: 10
-  health: 150
+  m_speed: 7
+  m_stoppingDistance: 1.6
+  m_PlayerInSight: 0
+  Attacking: 0
+  health: 135
   maxHealth: 0
   healthBar: {fileID: 3576654039938275334}
+  animator: {fileID: 0}
+  runningAnimationName: 
+  attackAnimationName: 
+  deathAnimationName: StoneGargoillMonster_Death
 --- !u!114 &7809090195468467214
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -325,7 +331,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 11dfde9640c141d419acccb07aff7bb5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  damage: 30
+  damage: 60
 --- !u!70 &3701217815867221097
 CapsuleCollider2D:
   m_ObjectHideFlags: 0
@@ -395,7 +401,7 @@ CircleCollider2D:
   m_UsedByComposite: 0
   m_Offset: {x: 0, y: 0}
   serializedVersion: 2
-  m_Radius: 20
+  m_Radius: 30
 --- !u!50 &8256367461363301376
 Rigidbody2D:
   serializedVersion: 4

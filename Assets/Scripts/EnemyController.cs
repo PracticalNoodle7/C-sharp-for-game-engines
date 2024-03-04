@@ -1,16 +1,19 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Rendering;
 using UnityEngine.UI;
 
-public class EnemyController: MonoBehaviour
+public class EnemyController : MonoBehaviour
 {
     //Variables for enemy movment
     public Transform m_Player;
     public float m_speed;
     public float m_stoppingDistance;
-    bool m_PlayerInSight;
+    public bool m_PlayerInSight;
+    public bool Attacking;
+
 
     //Variables for enemy health
     public float health;
@@ -18,15 +21,13 @@ public class EnemyController: MonoBehaviour
     public Image healthBar;
 
     //Declaring Animations
-    private Animator animator;
+    public Animator animator;
+    [SerializeField] private string runningAnimationName;
+    [SerializeField] private string attackAnimationName;
+    [SerializeField] private string deathAnimationName;
 
     ArenaManager arenaManager;
     scoreSystem scoreSystem;
-
-    private void Awake()
-    {
-
-    }
 
     void Start()
     {
@@ -48,11 +49,44 @@ public class EnemyController: MonoBehaviour
 
     void Update()
     {
+
+        //Calculates the players x position relative to the enemys x position
+        float PlayerPosition = m_Player.transform.position.x - transform.position.x;
+        
+        //Checks if player position is greater than O so they are on the right of the enemy
+        if (PlayerPosition > 0)
+        {
+            //Flips the sprite on the x axies to face the player
+            transform.localScale = new Vector2(-1, 1);
+        }
+        //Checks if player position is greater than O so they are on the left of the enemy
+        else if (PlayerPosition < 0)
+        {
+            //Dosen't flip the sprite or flips it back to normal if already flipped
+            transform.localScale = new Vector2(1, 1);
+        }
+
+        if (Attacking) return;
+
         //If two conditions are true then the enemy will start following the player
         if (m_PlayerInSight && Vector2.Distance(transform.position, m_Player.position) >= m_stoppingDistance)
         {
             transform.position = Vector2.MoveTowards(transform.position, m_Player.position, m_speed * Time.deltaTime);
-        }       
+            
+            if (Animator.StringToHash(runningAnimationName) != 0)
+            {
+                animator.SetBool("inSight", true);
+                animator.SetBool("inRange", false);
+            }
+        }
+        else if(m_PlayerInSight && Vector2.Distance(transform.position, m_Player.position) <= m_stoppingDistance)
+        {
+            if (Animator.StringToHash(attackAnimationName) != 0)
+            {
+                animator.SetBool("inRange", true);
+            }
+        }
+
         
         //If health bar exists it will applie the maxhealth and current health to image so it can display the health of the enemy as a graphic
         if (healthBar != null)
@@ -61,26 +95,32 @@ public class EnemyController: MonoBehaviour
 
             if (health <= 0)
             {
-
                 EnemyIsDead();
             }
         }
     }
 
+
     private void OnTriggerEnter2D(Collider2D collision)
     {
-        //If a player enters the trigger collison it will set a variable to true
         if (collision.CompareTag("Player"))
         {
             m_PlayerInSight = true;
         }
     }
+
+
     private void OnTriggerExit2D(Collider2D collision)
     {
         //if a player leaves the trigger collision it will set a variable to false
         if (collision.CompareTag("Player"))
         {
             m_PlayerInSight = false;
+
+            if (Animator.StringToHash(runningAnimationName) != 0)
+            {
+                animator.SetBool("inSight", false);
+            }
         }
     }
 
@@ -91,17 +131,26 @@ public class EnemyController: MonoBehaviour
 
     public void EnemyIsDead()
     {
-        animator.SetBool("isDead", true);
         
-        float animationLength = 0.9f;
-        Invoke(nameof(DestroyEnemy), animationLength);
+
+
+        if (Animator.StringToHash(deathAnimationName) != 0)
+        {
+            m_speed = 0;
+            animator.SetBool("isDead", true);
+        }
+        else
+        {
+            DestroyEnemy();
+        } 
     }
 
     public void DestroyEnemy()
     {
-        Destroy(gameObject);        
+        Destroy(gameObject);
         scoreSystem.AddScore(10);
 
+        
         //Updating the enemy count
         arenaManager.MinusFromEnemyCount();
     }
