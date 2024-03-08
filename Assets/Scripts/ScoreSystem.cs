@@ -31,19 +31,19 @@ public class ScoreSystem : MonoBehaviour
         // Choose a random spawn point
         Transform randomSpawnPoint = chestSpawnPoints[Random.Range(0, chestSpawnPoints.Length)];
 
-        if (score <= 150)
+        if (score <= 100)
         {
 
         }
-        else if (score < 250)
+        else if (score < 200)
         {
             Instantiate(CommonChest, randomSpawnPoint.position, Quaternion.identity);
         }
-        else if (score < 550)
+        else if (score < 350)
         {
             Instantiate(UncommonChest, randomSpawnPoint.position, Quaternion.identity);
         }
-        else if (score < 850)
+        else if (score < 450)
         {
             Instantiate(RareChest, randomSpawnPoint.position, Quaternion.identity);
         }

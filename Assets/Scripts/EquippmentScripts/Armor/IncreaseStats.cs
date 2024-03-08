@@ -43,9 +43,6 @@ public class IncreaseStats : MonoBehaviour
     //Upsating the player stats depending on the armors stats
     public void UpdateStats()
     {
-        //Reseting player stats so stats are stacked
-        ResetStats();
-
         //checking is armor is increasing health
         if (armorSO.IncreaseHealthAmout > 0)
         {

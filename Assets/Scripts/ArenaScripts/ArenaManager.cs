@@ -93,7 +93,7 @@ public class ArenaManager : MonoBehaviour
     //Corouting to wait before increasing the difficulty again
     public IEnumerator WaveController()
     {
-        yield return new WaitForSeconds(15);
+        yield return new WaitForSeconds(20);
 
         WaveDifficultyController();
     }

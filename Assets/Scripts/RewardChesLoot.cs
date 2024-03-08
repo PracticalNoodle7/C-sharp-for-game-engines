@@ -36,27 +36,27 @@ public class RewardChesLoot : MonoBehaviour
 
     //Deciding what loot to spawn
     public void OpenChest()
-    {
+    {            
+        //gets a random number between 0 and 1
+        float randomValue = Random.value;
+
         if (weapon != null)
         {
-            //gets a random number between 0 and 1
-            float randomValue = Random.value;
-
             //checks if random number is less them chance to drop weapon
             if (randomValue < weaponDropChance)
             {
                 //Spawns weapon
                 Instantiate(weapon, transform.position, Quaternion.identity);
             }
-
-            //checks if random number is more them chance to drop weapon
-            if (armor != null)
+        }            
+        
+        //checks if random number is more them chance to drop weapon
+        if (armor != null)
+        {
+            if (randomValue > weaponDropChance)
             {
-                if (randomValue > weaponDropChance)
-                {
-                    //Spawns armor
-                    Instantiate(armor, transform.position, Quaternion.identity);
-                }
+                //Spawns armor
+                Instantiate(armor, transform.position, Quaternion.identity);
             }
         }
 
