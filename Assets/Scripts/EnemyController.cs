@@ -26,13 +26,15 @@ public class EnemyController : MonoBehaviour
     [SerializeField] private string attackAnimationName;
     [SerializeField] private string deathAnimationName;
 
+    //Declaring other scripts
     ArenaManager arenaManager;
-    scoreSystem scoreSystem;
+    ScoreSystem scoreSystem;
 
     void Start()
     {
+        //Manually finding and attaching other scripts to help avoid any errors
         arenaManager = GameObject.Find("ArenaController").GetComponent<ArenaManager>();
-        scoreSystem = GameObject.Find("scoreSystem").GetComponent<scoreSystem>();
+        scoreSystem = GameObject.Find("scoreSystem").GetComponent<ScoreSystem>();
 
         //Get the attached components so we can use them later
         animator = GetComponent<Animator>();
@@ -100,7 +102,7 @@ public class EnemyController : MonoBehaviour
         }
     }
 
-
+    //Setting bool to true when player enters trigger
     private void OnTriggerEnter2D(Collider2D collision)
     {
         if (collision.CompareTag("Player"))
@@ -109,7 +111,7 @@ public class EnemyController : MonoBehaviour
         }
     }
 
-
+    //Setting bool to false when player leaves trigger
     private void OnTriggerExit2D(Collider2D collision)
     {
         //if a player leaves the trigger collision it will set a variable to false
@@ -124,16 +126,16 @@ public class EnemyController : MonoBehaviour
         }
     }
 
+    //updating health based on damage taken
     public void DamageEnemy(float damage)
     {
         health -= damage;
     }
 
+    //starting the death animation
     public void EnemyIsDead()
     {
-        
-
-
+        //checking if the enemy has a death animation to be perfromed
         if (Animator.StringToHash(deathAnimationName) != 0)
         {
             m_speed = 0;
@@ -145,13 +147,12 @@ public class EnemyController : MonoBehaviour
         } 
     }
 
+    //Destroying enemy and updating score and enemy count
     public void DestroyEnemy()
     {
         Destroy(gameObject);
         scoreSystem.AddScore(10);
 
-        
-        //Updating the enemy count
         arenaManager.MinusFromEnemyCount();
     }
 

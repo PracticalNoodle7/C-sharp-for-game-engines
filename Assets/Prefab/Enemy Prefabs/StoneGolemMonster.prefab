@@ -332,7 +332,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   EnemyBullet: {fileID: 3509480489693694044, guid: fc602db3ac170dd4eac95f6a4c312d94, type: 3}
-  projectileSpeed: 45
+  projectileSpeed: 20
 --- !u!61 &472288676369122809
 BoxCollider2D:
   m_ObjectHideFlags: 0

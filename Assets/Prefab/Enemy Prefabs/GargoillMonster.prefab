@@ -266,7 +266,7 @@ GameObject:
   m_Component:
   - component: {fileID: 5145915283848031209}
   - component: {fileID: 5694013636914927360}
-  - component: {fileID: 7809090195468467214}
+  - component: {fileID: 4533404025272953894}
   - component: {fileID: 3701217815867221097}
   - component: {fileID: 704795743457545758}
   - component: {fileID: 8256367461363301376}
@@ -319,7 +319,7 @@ MonoBehaviour:
   runningAnimationName: 
   attackAnimationName: 
   deathAnimationName: StoneGargoillMonster_Death
---- !u!114 &7809090195468467214
+--- !u!114 &4533404025272953894
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -328,10 +328,10 @@ MonoBehaviour:
   m_GameObject: {fileID: 7674243292957895891}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 11dfde9640c141d419acccb07aff7bb5, type: 3}
+  m_Script: {fileID: 11500000, guid: d5567814a540ede4c91797d0f5e07790, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  damage: 60
+  damage: 35
 --- !u!70 &3701217815867221097
 CapsuleCollider2D:
   m_ObjectHideFlags: 0

@@ -45,6 +45,7 @@ public class TopDownCharacterController : MonoBehaviour
     public TopDownCharacterStamina pStamina;
 
     PlayerDeadUIController deadUIController;
+    ScoreSystem scoresystem;
     #endregion
 
 
@@ -58,6 +59,7 @@ public class TopDownCharacterController : MonoBehaviour
     void Start()
     {
         deadUIController = GameObject.Find("UI Manager").GetComponent<PlayerDeadUIController>();
+        scoresystem = GameObject.Find("scoreSystem").GetComponent<ScoreSystem>();
         maxHealth = health;
     }
 
@@ -130,6 +132,7 @@ public class TopDownCharacterController : MonoBehaviour
         }
     }
 
+    // healing player and ensuring it does not go over max health
     public void RestoreHealth(int amountToChangeStat)
     {
         newHealth = health += amountToChangeStat;
@@ -150,9 +153,9 @@ public class TopDownCharacterController : MonoBehaviour
         playerSpeed = 0f;
         deadUIController.isPlayerDeadPanelOpen = true;
         deadUIController.OpenPlayerDeadPanel();
-
     }
 
+    //Respawning player + reseting variables
     public void RevivePlayer()
     {
         health = maxHealth;
@@ -162,6 +165,7 @@ public class TopDownCharacterController : MonoBehaviour
         deadUIController.OpenPlayerDeadPanel();
     }
 
+    //Late update to allow the player to roll at the end of a frame
     private void LateUpdate()
     {
         //Increase player speed when rolling

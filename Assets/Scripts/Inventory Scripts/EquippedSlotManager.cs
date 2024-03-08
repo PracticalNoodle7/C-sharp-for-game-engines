@@ -48,21 +48,19 @@ public class EquippedSlotManager : MonoBehaviour, IPointerClickHandler
         this.itemName = itemName;
         slotFull = true;
 
+        //Checks what armor and weapons are equipped if any even are
         if (heldItemManager != null)
         {
             heldItemManager.CheckIfToolEquipped();
-        }
-        else
-        {
-            Debug.Log("heldItemManager is not found");
+            heldItemManager.CheckIfArmorEquipped();
         }
     }
 
+    //UnEquipp equipment slot
     public void UnEquip()
     {
+        //Deselects all slots
         inventoryManager.DeselectAllSlots();
-
-
 
         inventoryManager.AddItem(itemName, 1, itemSprite, itemType);
 
@@ -72,20 +70,21 @@ public class EquippedSlotManager : MonoBehaviour, IPointerClickHandler
         slotImage.sprite = this.emptySprite;
         slotName.enabled = true;
         
+        //Checks if anything is equipped
         heldItemManager.CheckIfToolEquipped();
+        heldItemManager.CheckIfArmorEquipped();
     }
 
+    //Allows interaction with the slots through left click
    public void OnPointerClick(PointerEventData eventData)
    {
         if(eventData.button == PointerEventData.InputButton.Left)
         {
             OnLeftClick();
         }
-        if (eventData.button == PointerEventData.InputButton.Right)
-        {
-            OnRightClick();
-        }
-    }
+   }
+
+    //Calles unEquip slot when selected and slot is already full
     private void OnLeftClick()
     {
         if (thisEquipmentSelected && slotFull)
@@ -99,11 +98,4 @@ public class EquippedSlotManager : MonoBehaviour, IPointerClickHandler
             thisEquipmentSelected = true;
         }
     }
-
-    private void OnRightClick()
-    {
-
-    }
-
-
 }

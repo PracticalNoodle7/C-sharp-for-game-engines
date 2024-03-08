@@ -248,6 +248,7 @@ public class ItemSlotManager : MonoBehaviour, IPointerClickHandler
     {
         quantityText.enabled = false;
         itemImage.sprite = EmptySprite;
+        quantity = 0;
     }
 
     //resets the original slot back to its defult settings

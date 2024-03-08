@@ -100,6 +100,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   damage: 35
+  EnemyBulletPrefab: {fileID: 3509480489693694044}
 --- !u!50 &329928252974453217
 Rigidbody2D:
   serializedVersion: 4

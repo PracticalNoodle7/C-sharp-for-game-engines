@@ -7,6 +7,7 @@ using UnityEngine.UIElements;
 
 public class InventoryManager : MonoBehaviour
 {
+    //Decalring panel gameobjects and bools to controll if they are open or not
     public GameObject m_Inventory_Canvas;
     bool isInvCanvasOpen = false;
 
@@ -22,21 +23,22 @@ public class InventoryManager : MonoBehaviour
     public GameObject m_SettingsPanel;
     bool isSettingsPanelOpen = false;
 
-
+    //Declaring arrays from differnet scripts
     public ItemSlotManager[] itemSlot;
     public ItemSO[] itemSOs;
-    public WeaponSO[] weaponSOs;
     public EquipmentSlotManager[] equipmentSlot;
     public EquippedSlotManager[] equippedSlot;
 
     private void Update()
     {
+        //Calls the open/close inventory when I is pressed
         if (Input.GetKeyDown(KeyCode.I))
         {
             OpenAndCloseInventoryCanvas();
         }
     }
 
+    //Open/closes inventory depending on its current state
     public void OpenAndCloseInventoryCanvas()
     {
         isInvCanvasOpen = !isInvCanvasOpen;
@@ -47,6 +49,7 @@ public class InventoryManager : MonoBehaviour
 
     }
 
+    //Open/closes inventory panel depending on its current state
     public void NavigationOpenInventory()
     {
         CloseAllPanels();
@@ -55,6 +58,7 @@ public class InventoryManager : MonoBehaviour
         m_InventoryPanel.SetActive(isInvPanelOpen);
     }
 
+    //Open/closes Equipment depending on its current state
     public void NavigationOpenEquipment()
     {
         CloseAllPanels();
@@ -63,6 +67,7 @@ public class InventoryManager : MonoBehaviour
 
     }
 
+    //Open/closes crafting depending on its current state
     public void NavigationOpenCrafting()
     {
         CloseAllPanels();
@@ -71,6 +76,7 @@ public class InventoryManager : MonoBehaviour
 
     }
 
+    //Open/closes settings depending on its current state
     public void NavigationOpenSettings()
     {   
         CloseAllPanels();
@@ -79,6 +85,7 @@ public class InventoryManager : MonoBehaviour
 
     }
 
+    //closes all pannels when called
     private void CloseAllPanels()
     {
         isInvPanelOpen = false;
@@ -94,7 +101,7 @@ public class InventoryManager : MonoBehaviour
         m_SettingsPanel.SetActive(isSettingsPanelOpen);
     }
 
-
+    // Decides if an item can be used or not
     public bool UseItem(string itemName)
     {
         for (int i = 0; i < itemSOs.Length; i++)
@@ -104,14 +111,6 @@ public class InventoryManager : MonoBehaviour
                 bool usable = itemSOs[i].UseItem();
                 return usable;
             } 
-        }
-        for (int i = 0; i < weaponSOs.Length; i++)
-        {
-            if (weaponSOs[i].weaponName == itemName)
-            {
-                bool usable = weaponSOs[i].FireBullet();
-                return usable;
-            }
         }
         return false;
     }

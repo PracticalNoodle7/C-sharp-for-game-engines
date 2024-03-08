@@ -163,7 +163,7 @@ GameObject:
   m_Component:
   - component: {fileID: 8547162579604177307}
   - component: {fileID: 6383854117307302814}
-  - component: {fileID: 1184104917130742777}
+  - component: {fileID: 2349604144865908569}
   - component: {fileID: 6956353242661701063}
   - component: {fileID: 6123474562569043222}
   - component: {fileID: 825943666904020161}
@@ -216,7 +216,7 @@ MonoBehaviour:
   runningAnimationName: TreeMonster_Running
   attackAnimationName: TreeMonster_Attacking
   deathAnimationName: 
---- !u!114 &1184104917130742777
+--- !u!114 &2349604144865908569
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -229,7 +229,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   EnemyBullet: {fileID: 0}
-  projectileSpeed: 40
+  projectileSpeed: 20
 --- !u!212 &6956353242661701063
 SpriteRenderer:
   m_ObjectHideFlags: 0

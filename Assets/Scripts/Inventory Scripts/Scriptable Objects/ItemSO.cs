@@ -7,13 +7,12 @@ using UnityEngine.EventSystems;
 [CreateAssetMenu]
 public class ItemSO : ScriptableObject
 {
+    //Delcaring item data
     public string itemName;
     public StatToChange statToChange = new();
     public int amountToChangeStat;
 
-    public AttributeToChange attributeToChange = new();
-    public int ammountToChangeAttribute;
-
+    //Decides if item can be used and reutrns a bool
     public bool UseItem()
     {
         
@@ -30,26 +29,8 @@ public class ItemSO : ScriptableObject
                 return true;
             }
         }
-        if(statToChange == StatToChange.stamina)
-        {
-            //apply stamina change here
-        }
         return false;
     }
 
-    public enum StatToChange
-    {
-        none,
-        health,
-        stamina
-    };
-
-    public enum AttributeToChange
-    {
-        none,
-        strength,
-        defense,
-        intelligence,
-        agility
-    };    
+    public enum StatToChange { none, health}; 
 }

@@ -39,7 +39,7 @@ public class EquipmentSlotManager : MonoBehaviour, IPointerClickHandler
         inventoryManager = GameObject.Find("UI Manager").GetComponent<InventoryManager>();
     }
 
-    //Adding an item to an inventory slot while also checking it against a few conditions to ensure the correct mesures are taking so it is assigned correctly
+    //Adding an item to an equipment slot while also checking it against a few conditions to ensure the correct mesures are taking so it is assigned correctly
     public int AddItem(string itemName, int quantity, Sprite sprite, ItemType itemType)
     {
         //Checking to see if slot is already full
@@ -65,29 +65,21 @@ public class EquipmentSlotManager : MonoBehaviour, IPointerClickHandler
         return 0;
     }
 
-    //Allowing for the interaction with the inventory slots along with mouse keybinds to call methods that are assigned to the keybinds
+    //Allowing for the interaction with the equipment slots along with mouse keybinds to call methods that are assigned to the keybinds
     public void OnPointerClick(PointerEventData eventData)
     {
 
         if (eventData.button == PointerEventData.InputButton.Left)
         {
-            //calls the left click function
             OnLeftClick();
-        }
-        if (eventData.button == PointerEventData.InputButton.Right)
-        {
-            //calls the right click function
-            OnRightClick();
         }
     }
 
-    //This will use an item as long as it is usable 
     public void OnLeftClick()
     {
         if (thisEquipmentSelected)
         {
             Equip();
-            
         }
         else
         {
@@ -97,6 +89,7 @@ public class EquipmentSlotManager : MonoBehaviour, IPointerClickHandler
         }
     }
 
+    //Decides where to equip an item to depending on its item type
     private void Equip()
     {
         if (itemType == ItemType.Armor)
@@ -124,15 +117,11 @@ public class EquipmentSlotManager : MonoBehaviour, IPointerClickHandler
             Tool3.Equip(sprite, itemName);
         }
 
+        //Emptys the slot it came from
         EmptySlot();
 
     }
 
-    //This will start the process of moving an item from one slot to another
-    public void OnRightClick()
-    {
-
-    }
     private void EmptySlot()
     {
         itemName = null;

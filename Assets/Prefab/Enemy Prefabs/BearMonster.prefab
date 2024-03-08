@@ -229,7 +229,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   EnemyBullet: {fileID: 0}
-  projectileSpeed: 45
+  projectileSpeed: 20
 --- !u!70 &389423181225096157
 CapsuleCollider2D:
   m_ObjectHideFlags: 0

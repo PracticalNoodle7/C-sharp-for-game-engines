@@ -4,20 +4,24 @@ using UnityEngine;
 
 public class ItemManager : MonoBehaviour
 {
+    //Declares items variables
     [SerializeField] private string itemName;
     [SerializeField] private int quantity;
     [SerializeField] private Sprite sprite;
 
+    //Getting item type
     public ItemType itemType;
 
-    private InventoryManager inventoryManager;
+    //Declaring other script
+    InventoryManager inventoryManager;
 
-    // Start is called before the first frame update
     void Start()
     {
+        //Manually finding InventoryManager script to helpt avoid errors
         inventoryManager = GameObject.Find("UI Manager").GetComponent<InventoryManager>();
     }
 
+    //Adding items to inventory and checking it against a few conditions before destroying the world item
     private void OnCollisionEnter2D(Collision2D collision)
     {
         if (collision.gameObject.CompareTag("Player"))
@@ -31,8 +35,6 @@ public class ItemManager : MonoBehaviour
             {
                 quantity = leftOverItems;
             }
-            
         }
     }
-
 }

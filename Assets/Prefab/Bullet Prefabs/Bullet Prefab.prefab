@@ -9,10 +9,11 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 5041374553920674733}
+  - component: {fileID: 4323555764843292600}
   - component: {fileID: 2979696556738215056}
   - component: {fileID: 6798726239104724294}
   - component: {fileID: 4594925585589354093}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: Bullet Prefab
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -32,7 +33,7 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 0
+  m_RootOrder: -1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!212 &2979696556738215056
 SpriteRenderer:
@@ -128,7 +129,7 @@ CircleCollider2D:
     m_Bits: 0
   m_ExcludeLayers:
     serializedVersion: 2
-    m_Bits: 0
+    m_Bits: 192
   m_LayerOverridePriority: 0
   m_ForceSendLayers:
     serializedVersion: 2
@@ -207,5 +208,22 @@ PrefabInstance:
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
-    m_AddedComponents: []
+    m_AddedComponents:
+    - targetCorrespondingSourceObject: {fileID: 437283217536851911, guid: 0210c9c3ede0f844c9fb9f45b3685808, type: 3}
+      insertIndex: 1
+      addedObject: {fileID: 4323555764843292600}
   m_SourcePrefab: {fileID: 100100000, guid: 0210c9c3ede0f844c9fb9f45b3685808, type: 3}
+--- !u!114 &4323555764843292600
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7440212798999890223}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ca1d996c34ef57e4bbac3b381d027cf0, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  weaponSO: {fileID: 11400000, guid: d1842f59ddaa2c64580abe4546481157, type: 2}
+  BasicBulletPrefab: {fileID: 7440212798999890223}
